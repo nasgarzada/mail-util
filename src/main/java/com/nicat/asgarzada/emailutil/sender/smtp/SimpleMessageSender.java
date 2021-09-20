@@ -9,11 +9,12 @@ import jakarta.mail.internet.MimeMessage;
 
 /**
  * Handles simple text mails.
+ *
+ * @author nasgarzada
+ * @version 1.0.0
  * @see SmtpSender
  * @see MultipartMessageSender
  * @see Sender
- * @author nasgarzada
- * @version 1.0.0
  */
 public final class SimpleMessageSender extends SmtpSender {
     public SimpleMessageSender(String propertyPath) {
@@ -25,7 +26,7 @@ public final class SimpleMessageSender extends SmtpSender {
         var message = new MimeMessage(session);
         try {
             createCommonPart(message, mailEntity);
-            message.setText(mailEntity.getMessage());
+            message.setContent(mailEntity.getMessage(), findMessageType());
         } catch (MessagingException e) {
             throw new MailMessagingException("failed to create simple message: ", e);
         }

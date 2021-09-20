@@ -2,13 +2,13 @@ package com.nicat.asgarzada.emailutil.example;
 
 import com.nicat.asgarzada.emailutil.annotation.Bind;
 import com.nicat.asgarzada.emailutil.core.Email;
-import com.nicat.asgarzada.emailutil.sender.smtp.MultipartMessageSender;
+import com.nicat.asgarzada.emailutil.sender.smtp.SimpleMessageSender;
 
 public class Main {
     public static void main(String[] args) {
         Email.builder()
                 .from("nicat.asgerzade.9889@gmail.com")
-                .to("nicat.asgarzade.9889@gmail.com", false)
+                .to("nicat.asgerzade.9889@gmail.com", false)
                 .subject("Just testing my new library")
                 .withRenderer()
                 .path("template.txt")
@@ -17,7 +17,7 @@ public class Main {
                 .withAttachment()
                 .file("hello.png", "image.png")
                 .build()
-                .send(new MultipartMessageSender("email.properties"));
+                .send(new SimpleMessageSender("email.properties"));
     }
 
     public static class Example {
