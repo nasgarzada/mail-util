@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.nicat.asgarzada'
+version = '1.0.0'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // for template rendering
+    implementation('org.codehaus.groovy:groovy-templates:3.0.8')
+    implementation('org.apache.commons:commons-text:1.9')
+
+    // for sending smtp messages
+    implementation('jakarta.activation:jakarta.activation-api:2.0.1')
+    implementation('jakarta.mail:jakarta.mail-api:2.0.1')
+    implementation('com.sun.mail:jakarta.mail:2.0.1')
+
+    testImplementation('org.junit.jupiter:junit-jupiter')
+    testImplementation(platform('org.junit:junit-bom:5.7.2'))
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
