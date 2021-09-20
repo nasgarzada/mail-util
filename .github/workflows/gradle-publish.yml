@@ -9,6 +9,7 @@ on:
       - main
 
 jobs:
+  if: ${{ github.event.label.name == 'publish' }}
   build:
 
     runs-on: ubuntu-latest
