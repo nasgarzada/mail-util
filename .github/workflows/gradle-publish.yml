@@ -4,12 +4,10 @@
 name: Gradle Package
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [created]
 
 jobs:
-  if: ${{ github.event.label.name == 'publish' }}
   build:
 
     runs-on: ubuntu-latest
