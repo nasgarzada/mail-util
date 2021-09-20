@@ -8,6 +8,33 @@
 - built-in smtp support for simple or multipart messages;
 - support for sending mails from other channels;
 
+# Download 
+
+For downloading dependency: 
+```groovy
+dependencies {
+    implementation 'com.nicat.asgarzada:email-util:1.0.0'
+}
+```
+Repository setting:
+
+```groovy
+repositories {
+    maven {
+        url = uri("https://maven.pkg.github.com/nasgarzada/mail-util")
+        credentials {
+            username = project.findProperty("gpr.user") ?: "<your username>"
+            password = project.findProperty("gpr.key") ?: "<your personal access token>"
+        }
+    }
+}
+```
+
+In `"<your username>"` part add github your username.
+`"<your personal access token>"` part [generate personal access token](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token) for `read packages`.
+
+
+
 # Examples 
 
 ### Multipart mail sender 
