@@ -6,23 +6,24 @@ import com.nicat.asgarzada.emailutil.core.entity.MailEntity;
 import com.nicat.asgarzada.emailutil.exception.MailMessagingException;
 import com.nicat.asgarzada.emailutil.sender.Sender;
 import jakarta.activation.DataHandler;
-import jakarta.activation.FileDataSource;
 import jakarta.mail.MessagingException;
 import jakarta.mail.Multipart;
 import jakarta.mail.Session;
 import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
+import jakarta.mail.util.ByteArrayDataSource;
 
 import java.util.List;
 
 /**
  * Sender for handling multipart mails. Support for sending list of attachments
+ *
+ * @author nasgarzada
+ * @version 1.0.0
  * @see SmtpSender
  * @see SimpleMessageSender
  * @see Sender
- * @author nasgarzada
- * @version 1.0.0
  */
 public final class MultipartMessageSender extends SmtpSender {
     public MultipartMessageSender(String propertyPath) {
@@ -31,8 +32,9 @@ public final class MultipartMessageSender extends SmtpSender {
 
     /**
      * Creates mime message object.
+     *
      * @param mailEntity generated with {@link Email#builder()}
-     * @param session session of jakarta mail
+     * @param session    session of jakarta mail
      * @return mime message
      */
     @Override
@@ -58,6 +60,7 @@ public final class MultipartMessageSender extends SmtpSender {
 
     /**
      * Creates list of attachments if exists.
+     *
      * @param multipart
      * @param attachments list of attachments
      */
@@ -65,7 +68,11 @@ public final class MultipartMessageSender extends SmtpSender {
         attachments.forEach(attachment -> {
             var messageBodyPart = new MimeBodyPart();
             wrapMailException(() -> {
-                messageBodyPart.setDataHandler(new DataHandler(new FileDataSource(attachment.getFile())));
+                messageBodyPart.setDataHandler(
+                        new DataHandler(
+                                new ByteArrayDataSource(attachment.getFile(), attachment.getMimeType())
+                        )
+                );
                 messageBodyPart.setFileName(attachment.getFileName());
                 multipart.addBodyPart(messageBodyPart);
             }, "failed to set attachment " + attachment.getFileName());

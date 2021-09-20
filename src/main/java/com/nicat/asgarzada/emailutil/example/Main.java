@@ -2,10 +2,12 @@ package com.nicat.asgarzada.emailutil.example;
 
 import com.nicat.asgarzada.emailutil.annotation.Bind;
 import com.nicat.asgarzada.emailutil.core.Email;
-import com.nicat.asgarzada.emailutil.sender.smtp.SimpleMessageSender;
+import com.nicat.asgarzada.emailutil.sender.smtp.MultipartMessageSender;
+
+import java.io.FileNotFoundException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         Email.builder()
                 .from("nicat.asgerzade.9889@gmail.com")
                 .to("nicat.asgerzade.9889@gmail.com", false)
@@ -15,9 +17,9 @@ public class Main {
                 .bindingObject(new Example("Nijat Asgarzada"))
                 .build()
                 .withAttachment()
-                .file("hello.png", "image.png")
+                .file("image.png")
                 .build()
-                .send(new SimpleMessageSender("email.properties"));
+                .send(new MultipartMessageSender("email.properties"));
     }
 
     public static class Example {
